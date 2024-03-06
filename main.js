@@ -13,6 +13,7 @@ submitButton.addEventListener('click', function (e) {
         alert('Informe um username válido');
     }
 
+    submitInput.value = '';
     getUserInfo(username);
 
 });
@@ -28,18 +29,30 @@ function getUserInfo(username) {
             return response;
         })
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
 
             const user = {
                 name: data.name ?? data.login,
                 username: data.login,
                 followers: data.followers,
                 repositoriesCount: data.public_repos,
-                avatarURL: data.avatar_url
+                avatarURL: data.avatar_url,
+                repositories: []
             };
 
+            
+            const response = await fetch(`${data.repos_url}?sort=created&direction=desc&per_page=4`);
+            const repositories = await response.json();
+            
+            user.repositories = repositories.map(function (repo) {
+                return {
+                    name: repo.name,
+                    url: repo.html_url
+                };
+            });
+            
             createCard(user);
-
+            
         }).catch(error => {
             dialog(error.message);
         });
@@ -71,13 +84,31 @@ function createCard(user) {
 
     usersContainer.appendChild(card);
 
+    if (user.repositories.length > 0) {
+
+        const userRepositorie = document.createElement('div');
+        userRepositorie.className = 'card__user__repositories';
+
+        const h2 = document.createElement('h2');
+        h2.textContent = 'Repositories';
+
+        userRepositorie.appendChild(h2);
+
+        user.repositories.forEach(function (repo) {
+            const p = document.createElement('p');
+            const a = document.createElement('a');
+            a.href = repo.url;
+            a.textContent = repo.name;
+            a.target = '_blank';
+
+            p.appendChild(a);
+            userRepositorie.appendChild(p);
+        });
+        
+        card.appendChild(userRepositorie);
+    }    
 }
 
 function dialog(message) {
     alert(message);
 }
-
-//Renderizar informações do perfil
-
-// Toggle themas
-// Armazenar em cookies ou localStorage as preferências
