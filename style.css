@@ -7,6 +7,7 @@
 
 body {
     font-family: "Roboto", sans-serif;
+    height: 100vh;
 }
 
 header {
@@ -43,12 +44,12 @@ h1 {
 }
 
 .card {
-    display: inline-block;    
+    display: inline-block;
     padding: 5px;
     min-width: 560px;
     width: 600px;
     margin: 10px;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .card img {
@@ -58,13 +59,44 @@ h1 {
 }
 
 .card__user__info {
-    display: inline-block;    
+    display: inline-block;
     vertical-align: top;
     padding: 10px;
 }
 
 .card__user__repositories {
-    display: inline-block;    
+    display: inline-block;
     vertical-align: top;
-    
+
+}
+
+.modal {
+    padding: 1em;
+    max-width: 50ch;
+    border: 0;
+    background-color: white;
+    margin: auto;
+}
+
+.modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.close__button {
+    padding: 0.3rem;
+    background-color: #21beb1;
+    color: black;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+}
+
+.close__button:hover,
+.close__button:focus {
+    background-color: #000000;
+    color: white;
+
 }

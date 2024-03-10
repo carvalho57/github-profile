@@ -3,6 +3,7 @@ const submitButton = document.querySelector('.search__button');
 const submitInput = document.querySelector('.search__input');
 const usersContainer = document.querySelector('.users__container');
 
+
 submitButton.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -10,7 +11,8 @@ submitButton.addEventListener('click', function (e) {
     const username = submitInput.value;
 
     if (username === '') {
-        alert('Informe um username válido');
+        dialog('O nome do usuário deve ser preenchido');
+        return;
     }
 
     submitInput.value = '';
@@ -40,19 +42,19 @@ function getUserInfo(username) {
                 repositories: []
             };
 
-            
+
             const response = await fetch(`${data.repos_url}?sort=created&direction=desc&per_page=4`);
             const repositories = await response.json();
-            
+
             user.repositories = repositories.map(function (repo) {
                 return {
                     name: repo.name,
                     url: repo.html_url
                 };
             });
-            
+
             createCard(user);
-            
+
         }).catch(error => {
             dialog(error.message);
         });
@@ -104,11 +106,31 @@ function createCard(user) {
             p.appendChild(a);
             userRepositorie.appendChild(p);
         });
-        
+
         card.appendChild(userRepositorie);
-    }    
+    }
 }
 
 function dialog(message) {
-    alert(message);
+
+    const dialog = document.createElement('dialog');
+    dialog.className = 'modal';
+
+    const p = document.createElement('p');
+    p.textContent = message;
+
+    const closeButton = document.createElement('button');
+    closeButton.className = 'close__button';
+    closeButton.appendChild(document.createTextNode('OK'));
+    closeButton.setAttribute('autofocus',true);
+    closeButton.addEventListener('click', () => {
+        dialog.close();
+    });
+
+
+    dialog.appendChild(p);
+    dialog.appendChild(closeButton);
+    document.body.appendChild(dialog);
+
+    dialog.showModal();
 }
