@@ -25,7 +25,7 @@ To get the data you need to communicate with GitHub API. you can either
 * [Check API directly](https://api.github.com/users/chaharshivam)
 * [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 
-## Outros links
+## Other links
 * https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28
 * https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user
 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
